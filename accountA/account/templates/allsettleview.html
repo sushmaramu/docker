@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settlement records</title>
+
+    <style>
+      
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .back-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.history.back()">Back</button>
+        <h2>Total Settlement Records</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>Customer Application Id</th>
+                    <th>BranchCode</th> <!-- Display caution or remove if not required -->
+                    <th>DsaCode</th>
+                    <th>Settlement Date</th>
+                    <th>UTR Number</th>
+                    <th>Dsa Amount</th>
+                    <th>Branch Amount</th>
+                    <th>DR form bank</th>
+                    <th>Settlement By</th>
+                    <th>DR Bank AccountNumber</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in a %}
+                    <tr>
+                        <td>{{ x.id }}</td>
+                        <td>{{ x.application_id }}</td>
+                        <td>{{ x.franchCode }}</td> <!-- Consider hiding or securing password display -->
+                        <td>{{ x.refCode }}</td>
+                        <td>{{ x.Settlement_Date }}</td>
+                        <td>{{ x.UTR_Number }}</td>
+                        <td>{{ x.dsa_Amount_in_Rs }}</td>
+                        <td>{{ x.franch_Amount_in_Rs }}</td>
+                        <td>{{ x.DR_From_Bank }}</td>
+                        <td>{{ x.Settlement_By}}</td>
+                        <td>{{ x.DR_Bank_Account_Number }}</td>
+
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

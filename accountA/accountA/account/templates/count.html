@@ -1,0 +1,149 @@
+{% extends 'dashboard.html' %}
+{% block content1 %}
+<style>
+    .inside-card {
+        position: relative;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .inside-card:hover {
+        transform: translateY(-8px);
+        cursor: pointer;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Add a shadow on hover */
+    }
+
+    .card-custom {
+        border-radius: 20px; /* More rounded corners */
+        overflow: hidden;
+        background-color: #f7f7f7;
+        height: 120px; /* Adjust height for better visual balance */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow around cards */
+    }
+
+    .card-body {
+        padding: 20px; /* Add padding inside the cards for spacing */
+        border-radius: 15px;
+        color: white;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 30px;
+        font-family: 'Arial', sans-serif;
+        font-size: 22px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    h1 span {
+        color: white;
+        text-shadow: -1px 0 orange, 1px 0 orange, 0 -1px orange, 0 1px orange;
+    }
+
+    /* Gradient background styles for cards */
+    .card-body.gradient-1 {
+        background: linear-gradient(135deg, #378ae8 0%, #378ae8 100%);
+    }
+
+    .card-body.gradient-2 {
+        background: linear-gradient(135deg, #6a11cb 0%, #6a11cb 100%);
+    }
+
+    .card-body.gradient-3 {
+        background: linear-gradient(135deg, #be2791 0%, #be2791 100%);
+    }
+
+    .card-body.gradient-4 {
+        background: linear-gradient(135deg, #a6d81d 0%, #a6d81d 100%);
+    }
+
+    .card-body.gradient-5 {
+        background: linear-gradient(135deg, #7a28c2 0%, #cacdc3 100%);
+    }
+
+    /* Adjustments to text inside cards */
+    .title {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .fw-bold {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 1px; /* Add some spacing to make text more legible */
+    }
+
+    /* Responsive Layout */
+    @media (max-width: 768px) {
+        .card-custom {
+            height: 150px; /* Increase height on small screens */
+        }
+        .card-body {
+            padding: 15px;
+        }
+        h1 {
+            font-size: 20px;
+        }
+    }
+</style>
+
+<div class="container mt-4">
+    <!-- <h1><b>Employee Dashboard</b></h1> -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-4"> <!-- Ensures two cards per row on medium screens -->
+        <!-- Disbursement Records Card -->
+        <div class="col-md-6">
+            <div class="card card-custom inside-card shadow-lg">
+                <div class="card-body gradient-1">
+                   <a href="{% url 'alldis' %}" style="color: white; text-decoration: none;" ><p class="title">Disbursement Records</p>
+                    <p class="fw-bold">{{ disbursementcount }}</p></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settlement Records Card -->
+       <div class="col-md-6">
+            <div class="card card-custom inside-card shadow-lg">
+                <div class="card-body gradient-2">
+                    <a href="{% url 'allsettle' %}" style="color: white; text-decoration: none;" ><p class="title">Settlement Records</p>
+                    <p class="fw-bold">{{ settlementcount }}</p></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- DSA Commission Amount Card -->
+        <div class="col-md-6">
+            <div class="card card-custom inside-card shadow-lg">
+                <div class="card-body gradient-3">
+                    <p class="title">DSA Commission Amount</p>
+                    <p class="fw-bold">{{ dsa_amount }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Branch Commission Amount Card -->
+        <div class="col-md-6">
+            <div class="card card-custom inside-card shadow-lg">
+                <div class="card-body gradient-4">
+                    <p class="title">Branch Commission Amount</p>
+                    <p class="fw-bold">{{ branch_amount }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Amount Card -->
+        <div class="col-md-6">
+            <div class="card card-custom inside-card shadow-lg">
+                <div class="card-body gradient-5">
+                    <p class="title">Total Amount</p>
+                    <p class="fw-bold">{{ total_amount }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

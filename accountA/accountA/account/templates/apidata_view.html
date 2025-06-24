@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Profiles List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                dom: 't',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ],
+                responsive: true,
+                autoWidth: true
+            });
+        });
+    </script>
+    <script>
+    $(document).ready(function () {
+        // Function to highlight active filters
+        function updateActiveClass() {
+            $('.filter-input').each(function () {
+                if ($(this).val()) {
+                    $(this).addClass('active'); // Add active class if input has a value
+                } else {
+                    $(this).removeClass('active'); // Remove active class if input is empty
+                }
+            });
+        }
+    
+        // Function to fetch filtered data from the server
+        function fetchData(page = 1) {
+            const startDate = $('#start_date').val() || null; // Use null if empty
+            const endDate = $('#end_date').val() || null; // Use null if empty
+            const searchQuery = $('#search').val() || null; // Use null if empty
+    
+            // Make AJAX call to fetch data
+            $.ajax({
+                url: window.location.pathname,
+                data: {
+                    start_date: startDate,
+                    end_date: endDate,
+                    search: searchQuery,
+                    page: page, // Include page number in the request
+                },
+                success: function (data) {
+                    $('#data-container').html(data);
+                    // Reinitialize pagination after data load
+                    initializePagination();
+                },
+            });
+        }
+    
+        // Function to handle pagination click events
+        function initializePagination() {
+            $('.pagination .page-link').on('click', function (e) {
+                e.preventDefault();
+                const page = $(this).data('page') || $(this).attr('href').split('page=')[1];
+                if (page) {
+                    fetchData(page);
+                }
+            });
+        }
+    
+        // Check and update active classes on page load
+        updateActiveClass();
+    
+        // Add event listeners for input and change events
+        $('.filter-input').on('input change', function () {
+            updateActiveClass();
+            const filterType = $(this).attr('id'); // Get the filter type (e.g., start_date or end_date)
+            const filterValue = $(this).val();
+    
+            // Fetch data only if the filter value has changed
+            if (filterType === 'start_date' || filterType === 'end_date' || filterType === 'search') {
+                fetchData(); // Fetch new data on filter change
+            }
+        });
+    
+        // Initialize pagination on page load
+        initializePagination();
+    });
+    
+</script>
+</head>
+<body>
+    <style>
+        .back-button {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .back-button:hover {
+            color: #007bff; /* Change color on hover */
+        }
+       
+  
+</style>
+
+   
+    
+
+    <div class="container">
+       
+        <center><h1>Disbursement Details</h1></center>
+        <a href="javascript:void(0);" onclick="window.history.back();" class="back-button">← Back</a>
+
+        <!-- Search and filter form -->
+        <form method="GET" class="mb-3" id="filter-form" style="float: right;">
+            <div class="form-row">
+                <!-- Start date filter -->
+                <div class="form-group col-md-4">
+                    <label for="start_date">Start Date</label>
+                    <input 
+                        type="date" 
+                        class="form-control" 
+                        name="start_date" 
+                        id="start_date" 
+                        value="{{ request.GET.start_date|default:'' }}" 
+                    >
+                </div>
+        
+                <!-- End date filter -->
+                <div class="form-group col-md-4">
+                    <label for="end_date">End Date</label>
+                    <input 
+                        type="date" 
+                        class="form-control" 
+                        name="end_date" 
+                        id="end_date" 
+                        value="{{ request.GET.end_date|default:'' }}" 
+                    >
+                </div>
+        
+                <!-- Search filter -->
+                <div class="form-group col-md-4">
+                    <label for="search">Search</label>
+                    <input 
+                        type="text" 
+                        class="form-control filter-input" 
+                        name="search" 
+                        id="search" 
+                        placeholder="Search..." 
+                        value="{{ request.GET.search|default:'' }}" 
+                    >
+                </div>
+            </div>
+        
+            <!-- <button type="submit" class="btn btn-primary">Filter</button>
+            
+            <a href="?" class="btn btn-secondary">Reset</a> -->
+        </form>
+        
+                <!-- Third search bar for application_id, franchcode, dsacode, etc. -->
+                <!-- <div class="form-group col-md-6">
+                    <label for="search">Search by Application ID, Franchcode, DSA Code, or Single Date</label>
+                    <input type="text" class="form-control" name="search" id="search" placeholder="Enter search keyword">
+                </div> -->
+            </div>
+        </form>
+    
+    
+        
+
+
+        <!-- Container where the filtered data will be loaded dynamically -->
+        <div id="data-container">
+            {% include 'disbursement_table.html' %}
+        </div>
+    </div>
+    
+</body>
+</html>
