@@ -117,10 +117,10 @@ SESSION_COOKIE_NAME = 'accounts'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # Use PostgreSQL backend
-        'NAME': 'account',  # Replace with your database name
+        'NAME': 'dreamdev',  # Replace with your database name
         'USER':'admin',  # Replace with your database user
-        'PASSWORD': 'slnfinserv12345',  # Replace with your database password
-        'HOST': 'database-1.cfq60cwsw2dq.eu-north-1.rds.amazonaws.com',  # Set to 'localhost' or the IP address of your PostgreSQL server
+        'PASSWORD': 'aws1234567',  # Replace with your database password
+        'HOST': 'database-1.ccvioeigku04.us-east-1.rds.amazonaws.com',  # Set to 'localhost' or the IP address of your PostgreSQL server
         'PORT': '3306',  # Default PostgreSQL port
         'OPTIONS': {
           'init_command': "SET sql_mode='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION'",
