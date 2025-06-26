@@ -31,16 +31,16 @@ SECRET_KEY = 'django-insecure-(up!at-i1k4wtxoa&2mpk%*kjgbl=$c+_n6qc6!yep!8ea_x@(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-AWS_ACCESS_KEY_ID = 'AKIA5WLTTCXBDLONQ54K'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'rahulbuckets'
-AWS_S3_SIGNATURE_NAME = 's3v4',
-AWS_S3_REGION_NAME = 'eu-north-1'
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL =  None
-AWS_S3_VERIFY = True
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#ALLOWED_HOSTS = ['*']
+#AWS_ACCESS_KEY_ID = 'AKIA5WLTTCXBDLONQ54K'
+#AWS_SECRET_ACCESS_KEY = '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'
+#AWS_STORAGE_BUCKET_NAME = 'rahulbuckets'
+#AWS_S3_SIGNATURE_NAME = 's3v4',
+#AWS_S3_REGION_NAME = 'eu-north-1'
+#AWS_S3_FILE_OVERWRITE = False
+#AWS_DEFAULT_ACL =  None
+#AWS_S3_VERIFY = True
+#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 
